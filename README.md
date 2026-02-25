@@ -5,14 +5,23 @@
     <title>整數的分數倍 - 表徵互動教學</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* 樣式隔離與環境補強：確保在 GitHub Pages/Jekyll 環境下正常顯示 */
+        
+        /* 修正 GitHub Markdown 主題可能造成的干擾 */
+        .markdown-body ul, .markdown-body ol { padding-left: 0 !important; }
+        .markdown-body h1, .markdown-body h2 { border-bottom: none !important; }
+
         /* 允許網頁捲動以適應不同載具 */
         html, body {
-            height: auto;
-            overflow-y: auto;
+            height: auto !important;
+            overflow-y: auto !important;
             scroll-behavior: smooth;
         }
 
-        .modal-overlay { background-color: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
+        .modal-overlay { 
+            background-color: rgba(0, 0, 0, 0.5) !important; 
+            backdrop-filter: blur(4px) !important; 
+        }
         
         /* 分數切分線：紅色虛線 */
         .fraction-split-line { stroke: #ef4444; stroke-width: 3; stroke-dasharray: 6,4; pointer-events: none; }
@@ -27,21 +36,26 @@
             @apply bg-red-500 border-red-500 text-white shadow-md transform scale-105;
         }
 
-        /* 標準分數顯示樣式 (分子在上分母在下) */
+        /* 標準分數顯示樣式 (分子在上分母在下) - 加強結構穩定性 */
         .frac-display {
-            display: inline-flex;
-            flex-direction: column;
-            vertical-align: middle;
-            text-align: center;
-            line-height: 1.1;
-            padding: 0 0.1em;
+            display: inline-flex !important;
+            flex-direction: column !important;
+            vertical-align: middle !important;
+            text-align: center !important;
+            line-height: 1 !important;
+            margin: 0 0.2em !important;
+            min-width: 1.2em;
         }
         .frac-display .top { 
-            border-bottom: 2px solid currentColor; 
-            padding: 0 0.2em;
+            border-bottom: 1.5px solid currentColor !important; 
+            padding: 0 0.1em 0.1em 0.1em !important;
+            display: block !important;
+            width: 100% !important;
         }
         .frac-display .bottom { 
-            padding: 0 0.2em;
+            padding: 0.1em 0.1em 0 0.1em !important;
+            display: block !important;
+            width: 100% !important;
         }
 
         /* 讓畫布在小螢幕上可以橫向滾動 */
@@ -52,6 +66,9 @@
             justify-content: center;
             padding: 20px 0;
         }
+
+        /* 修正 Jekyll 中可能出現的按鈕樣式 */
+        button { border: none; cursor: pointer; }
     </style>
 </head>
 <body class="bg-slate-50 min-h-screen font-sans text-slate-900 pb-20">
@@ -63,7 +80,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
                 更換題目
             </button>
-            <h1 class="font-black text-base tracking-tight hidden sm:block">整數的分數倍</h1>
+            <h1 class="font-black text-base tracking-tight hidden sm:block !m-0">整數的分數倍</h1>
         </div>
         
         <div class="flex items-center gap-3">
@@ -80,7 +97,7 @@
         
         <!-- 任務引導區 -->
         <section class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
-            <h2 class="text-[10px] font-black text-slate-400 mb-2 uppercase tracking-widest">任務引導</h2>
+            <h2 class="text-[10px] font-black text-slate-400 mb-2 uppercase tracking-widest !m-0">任務引導</h2>
             <div id="guide-text" class="text-2xl sm:text-3xl text-slate-800 font-bold flex items-center flex-wrap gap-2">
                 <!-- 由 JS 動態生成 -->
             </div>
@@ -92,7 +109,7 @@
             <!-- 控制面板 -->
             <aside class="lg:w-80 flex flex-col gap-4">
                 <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
-                    <h2 class="text-[10px] font-black text-slate-400 mb-6 uppercase tracking-widest">互動操作</h2>
+                    <h2 class="text-[10px] font-black text-slate-400 mb-6 uppercase tracking-widest !m-0">互動操作</h2>
                     
                     <div class="space-y-8">
                         <div>
@@ -131,11 +148,11 @@
         </div>
     </main>
 
-    <!-- 結果與設定 Modal (保持原樣) -->
+    <!-- 結果與設定 Modal -->
     <div id="result-modal" class="fixed inset-0 modal-overlay z-[100] hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-8 text-center transform transition-all scale-95 opacity-0" id="result-content">
             <div id="result-icon" class="text-6xl mb-4"></div>
-            <h3 id="result-title" class="text-2xl font-black mb-2"></h3>
+            <h3 id="result-title" class="text-2xl font-black mb-2 !m-0"></h3>
             <p id="result-text" class="text-slate-600 font-bold mb-8"></p>
             <button onclick="closeResult()" class="w-full py-4 bg-slate-900 text-white font-black rounded-xl hover:bg-black transition-colors">確定</button>
         </div>
@@ -143,7 +160,7 @@
 
     <div id="settings-modal" class="fixed inset-0 modal-overlay z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-8 transform transition-all scale-95 opacity-0" id="modal-content">
-            <h3 class="text-xl font-bold text-slate-800 mb-8 text-center tracking-tight">自訂任務數值</h3>
+            <h3 class="text-xl font-bold text-slate-800 mb-8 text-center tracking-tight !m-0">自訂任務數值</h3>
             <div class="flex items-center justify-center gap-6 mb-10">
                 <div class="flex flex-col items-center">
                     <label class="text-[10px] font-black text-slate-400 mb-2 uppercase tracking-tighter">被乘數</label>
@@ -167,7 +184,6 @@
         const svgNS = "http://www.w3.org/2000/svg";
         const svg = document.getElementById('math-svg');
 
-        // 產生垂直分數 HTML 結構的輔助函式
         function getVerticalFracHTML(num, den, isSmall = false) {
             const sizeClass = isSmall ? "text-xs" : "text-2xl sm:text-3xl";
             return `
@@ -204,19 +220,17 @@
         }
 
         function updateUI() {
-            // 更新任務引導區
             const guide = document.getElementById('guide-text');
             if (guide) {
                 guide.innerHTML = `
                     <span>請問</span> 
                     <span class="text-blue-600 underline">${config.total}</span> 
                     <span>的</span> 
-                    <span class="text-purple-600 mx-1">${getVerticalFracHTML(config.targetNum, config.targetDen)}</span> 
+                    <span class="text-purple-600 flex items-center">${getVerticalFracHTML(config.targetNum, config.targetDen)}</span> 
                     <span>倍是多少？</span>
                 `;
             }
             
-            // 更新迷你狀態標籤
             const miniFrac = document.getElementById('target-frac-mini');
             if (miniFrac) {
                 miniFrac.innerHTML = getVerticalFracHTML(config.targetNum, config.targetDen, true);
@@ -269,7 +283,6 @@
             }
         }
 
-        // 修改算式提示區的分數格式
         function updateCalcPreview() {
             const preview = document.getElementById('calculation-preview');
             if (!preview) return;
